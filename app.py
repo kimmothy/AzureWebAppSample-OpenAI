@@ -22,7 +22,7 @@ def getAOAIResponse(message):
     try: 
 
         # Get configuration settings 
-        load_dotenv()
+        # load_dotenv()
         azure_oai_endpoint = os.getenv("AZURE_OAI_ENDPOINT")
         azure_oai_key = os.getenv("AZURE_OAI_KEY")
         azure_oai_model = os.getenv("AZURE_OAI_MODEL")
