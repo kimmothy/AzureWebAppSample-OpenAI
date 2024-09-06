@@ -34,7 +34,7 @@ def getAOAIResponse(message):
         # Set OpenAI configuration settings
         openai.api_type = "azure"
         openai.api_base = azure_oai_endpoint
-        openai.api_version = "2023-03-15-preview"
+        openai.api_version = "2023-02-15-preview"
         openai.api_key = azure_oai_key
 
         # Send request to Azure OpenAI model
