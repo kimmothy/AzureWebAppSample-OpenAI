@@ -40,7 +40,7 @@ def getAOAIResponse(message):
         # Send request to Azure OpenAI model
         print("Sending request for summary to Azure OpenAI endpoint...\n\n")
         response = openai.ChatCompletion.create(
-            engine=azure_oai_model,
+            model=azure_oai_model,
             temperature=0.7,
             max_tokens=120,
             messages=[
