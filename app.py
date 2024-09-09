@@ -1,10 +1,17 @@
 import os
 import openai
+from openai import AzureOpenAI
 
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
 app = Flask(__name__)
+api_version = "2023-07-01-preview"
+aoai_client = AzureOpenAI(
+    api_version = api_version,
+    azure_endpoint=os.getenv("AZURE_OAI_ENDPOINT"),
+    azure_deployment=os.getenv("AZURE_OAI_MODEL")
+)
 
 @app.route('/text')
 def text():
@@ -32,15 +39,15 @@ def getAOAIResponse(message):
         text = message
         
         # Set OpenAI configuration settings
-        openai.api_type = "azure"
-        openai.api_base = azure_oai_endpoint
-        openai.api_version = "2023-02-15-preview"
+        # openai.api_type = "azure"
+        # openai.api_base = azure_oai_endpoint
+        # openai.api_version = "2023-02-15-preview"
         openai.api_key = azure_oai_key
 
         # Send request to Azure OpenAI model
         print("Sending request for summary to Azure OpenAI endpoint...\n\n")
-        response = openai.ChatCompletion.create(
-            model=azure_oai_model,
+        response = aoai_client.chat.completions.create(
+            model="<ignored>",
             temperature=0.7,
             max_tokens=120,
             messages=[
@@ -49,7 +56,7 @@ def getAOAIResponse(message):
             ]
         )
 
-        return response
+        return response.to_json
         
 
     except Exception as ex:
