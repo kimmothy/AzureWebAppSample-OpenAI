@@ -10,7 +10,8 @@ api_version = "2023-07-01-preview"
 aoai_client = AzureOpenAI(
     api_version = api_version,
     azure_endpoint=os.getenv("AZURE_OAI_ENDPOINT"),
-    azure_deployment=os.getenv("AZURE_OAI_MODEL")
+    azure_deployment=os.getenv("AZURE_OAI_MODEL"),
+    api_key=os.getenv("AZURE_OAI_KEY")
 )
 
 @app.route('/text')
