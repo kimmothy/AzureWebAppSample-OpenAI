@@ -6,13 +6,7 @@ from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
 
 app = Flask(__name__)
-api_version = "2023-07-01-preview"
-aoai_client = AzureOpenAI(
-    api_version = api_version,
-    azure_endpoint=os.getenv("AZURE_OAI_ENDPOINT"),
-    azure_deployment=os.getenv("AZURE_OAI_MODEL"),
-    api_key=os.getenv("AZURE_OAI_KEY")
-)
+
 
 @app.route('/text')
 def text():
@@ -30,11 +24,18 @@ def favicon():
 
 def getAOAIResponse(message):
     try: 
+        api_version = "2023-07-01-preview"
+        aoai_client = AzureOpenAI(
+            api_version = api_version,
+            azure_endpoint=os.getenv("AZURE_OAI_ENDPOINT"),
+            azure_deployment=os.getenv("AZURE_OAI_MODEL"),
+            api_key=os.getenv("AZURE_OAI_KEY")
+        )
 
         # Get configuration settings 
-        azure_oai_endpoint = os.getenv("AZURE_OAI_ENDPOINT")
-        azure_oai_key = os.getenv("AZURE_OAI_KEY")
-        azure_oai_model = os.getenv("AZURE_OAI_MODEL")
+        # azure_oai_endpoint = os.getenv("AZURE_OAI_ENDPOINT")
+        # azure_oai_key = os.getenv("AZURE_OAI_KEY")
+        # azure_oai_model = os.getenv("AZURE_OAI_MODEL")
         
         # Read text from file
         text = message
@@ -43,7 +44,7 @@ def getAOAIResponse(message):
         # openai.api_type = "azure"
         # openai.api_base = azure_oai_endpoint
         # openai.api_version = "2023-02-15-preview"
-        openai.api_key = azure_oai_key
+        # openai.api_key = azure_oai_key
 
         # Send request to Azure OpenAI model
         print("Sending request for summary to Azure OpenAI endpoint...\n\n")
@@ -62,6 +63,7 @@ def getAOAIResponse(message):
 
     except Exception as ex:
         print(ex)
+        return ex
 
 @app.route('/hello', methods=['POST'])
 def hello():
