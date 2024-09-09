@@ -56,7 +56,7 @@ def getAOAIResponse(message):
             ]
         )
 
-        return response.to_json
+        return response.to_json()
         
 
     except Exception as ex:
